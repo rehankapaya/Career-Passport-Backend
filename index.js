@@ -1,0 +1,40 @@
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+require('dotenv').config();
+const connectDB = require('./src/config/db');
+const adminRoutes = require('./src/routes/adminRoutes');
+const careerRoutes = require('./src/routes/careerRoutes');
+const userRoutes = require('./src/routes/userRoutes');
+const resourceRoutes = require('./src/routes/resourceRoutes');
+const userProfileRoutes = require('./src/routes/userProfileRoutes');
+
+// Connect to Database
+connectDB();
+
+const app = express();
+
+// Middleware
+app.use(cors(
+    {origin: 'http://localhost:5173', credentials: true}
+)); 
+app.use(express.json());
+app.use(cookieParser());
+app.use('/uploads', express.static('uploads'));
+
+// API Routes
+app.use('/api/admin', adminRoutes);
+app.use('/api/careers', careerRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/user-profiles', userProfileRoutes);
+
+
+app.get('/', (req, res) => {
+    res.send('PathSeeker API is running...');
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

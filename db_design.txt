@@ -1,0 +1,86 @@
+Admins
+-------------
+admin_id (PK)
+name
+email
+password_hash
+
+Careers
+--------------
+career_id (PK)
+title
+description
+domain
+required skills
+education_path
+expected_salary
+
+Users
+---------------
+user_id (PK)
+uname
+email (unique)
+password_hash
+role (student/graduate /professional)
+
+Resources
+----------------
+resource_id (PK)
+title
+category
+description
+file_url
+tag
+views_count
+created by (FK)
+
+SuccessStories
+---------------
+story_id (PK)
+rname
+domain
+story_text
+image_url
+submitted_by (FK)
+approved_by (FK)
+approved_at
+
+UserProfiles
+-----------------
+profile id (PK)
+user_id (FK)
+education level
+interests
+profile_image
+updated_at
+
+
+Multimedia
+-------------------
+media id (PK)
+title
+type
+url
+tags
+transcript
+rating avg
+rating count
+
+
+QuizQuestions
+----------------
+question id (PK)
+question text
+type
+options
+correct_answer
+weightage
+
+Feedback
+--------------------
+feedback_id (PK)
+user_id (FK)
+category
+message
+status
+submitted_at
