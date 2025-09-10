@@ -3,14 +3,30 @@ const Multimedia = require('../models/Multimedia');
 // Add new multimedia
 const addMultimedia = async (req, res) => {
   try {
-    const { title, type, url, tags, transcript } = req.body;
+    const { title, type, tags, transcript } = req.body;
+    let finalUrl = req.body.url;
+    console.log(req.file);
+    console.log(req.body);
+    console.log(req.body.url);
+
+    // If a file is uploaded, generate its URL
+    if (req.file) {
+      finalUrl = `uploads/multimedia/${req.file.filename}`;
+    }
+
+    // Validate that we have either a URL or a file
+    if (!finalUrl && !req.file) {
+      return res.status(400).json({ message: 'Either URL or file is required' });
+    }
+
     const multimedia = await Multimedia.create({
       title,
       type,
-      url,
-      tags: Array.isArray(tags) ? tags : tags ? [tags] : [],
-      transcript,
+      url: finalUrl,
+      tags: tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [],
+      transcript: transcript || '',
     });
+    
     res.status(201).json(multimedia);
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
@@ -40,6 +56,7 @@ const getMultimediaById = async (req, res) => {
 
 // Update multimedia
 const updateMultimedia = async (req, res) => {
+  console.log(req.body);
   try {
     const { title, type, url, tags, transcript } = req.body;
     const item = await Multimedia.findOne({ media_id: req.params.id });

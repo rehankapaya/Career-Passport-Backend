@@ -9,9 +9,10 @@ const {
   rateMultimedia,
 } = require('../controllers/multimediaController');
 const { protectAdmin } = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/upload');
 
 // Add new multimedia (admin only)
-router.post('/', protectAdmin, addMultimedia);
+router.post('/', protectAdmin,upload.single('file'), addMultimedia);
 // {
 //   "title": "How React Works",
 //   "type": "video",
@@ -29,7 +30,7 @@ router.get('/', getMultimedia);
 router.get('/:id', getMultimediaById);
 
 // Update multimedia (admin only)
-router.put('/:id', protectAdmin, updateMultimedia);
+router.put('/:id', protectAdmin, upload.single('file'), updateMultimedia);
 
 // Delete multimedia (admin only)
 router.delete('/:id', protectAdmin, deleteMultimedia);
