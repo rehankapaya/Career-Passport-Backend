@@ -10,7 +10,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const resourceRoutes = require('./src/routes/resourceRoutes');
 const userProfileRoutes = require('./src/routes/userProfileRoutes');
 const succesStoriesRoutes = require('./src/routes/successStoriesRoutes');
-
+const multimediaRoutes = require('./src/routes/multimediaRoutes');
 // Connect to Database
 connectDB();
 
@@ -31,7 +31,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/user-profiles', userProfileRoutes);
 app.use('/api/success-stories', succesStoriesRoutes);
-
+app.use('/api/multimedia', multimediaRoutes);
 
 app.get('/', (req, res) => {
     res.send('PathSeeker API is running...');
