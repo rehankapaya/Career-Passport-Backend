@@ -10,8 +10,8 @@ const protectAdmin = async (req, res, next) => {
         token = req.headers.authorization.split(' ')[1];
     }
     // Check cookies
-    else if (req.cookies && req.cookies.adminToken) {
-        token = req.cookies.adminToken;
+    else if (req.cookies && req.cookies.token) {
+        token = req.cookies.token;
     }
 
     if (!token) {

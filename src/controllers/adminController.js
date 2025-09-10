@@ -14,12 +14,12 @@ const authAdmin = async (req, res) => {
   if (admin && (await bcrypt.compare(password, admin.password_hash))) {
     // Generate a token for authentication
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
+      expiresIn: '10d',
     });
 
-    res.cookie('adminToken', token, {
+    res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 60 * 60 * 1000 // 1 hour
+      // maxAge: 60 * 60 * 1000 // 1 hour
     });
 
     res.json({
