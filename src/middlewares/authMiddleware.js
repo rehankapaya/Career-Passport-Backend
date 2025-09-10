@@ -17,6 +17,7 @@ const protectAdmin = async (req, res, next) => {
     if (!token) {
         return res.status(401).json({ message: 'Not authorized, no token' });
     }
+    console.log("----------------------token", token)
 
     try {
         // Verify token and decode admin ID
