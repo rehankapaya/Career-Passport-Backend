@@ -7,22 +7,29 @@ const upsertUserProfile = async (req, res) => {
     const profile_image = req.file ? req.file.path : undefined;
     const user_id = req.user._id;
 
-    console.log('req.file:', req.file);
+    // Parse interests if it's a stringified array
+    let parsedInterests = interests;
+    if (typeof interests === 'string') {
+      try {
+        parsedInterests = JSON.parse(interests);
+      } catch {
+        parsedInterests = [interests];
+      }
+    }
+
     let profile = await UserProfile.findOne({ user_id });
 
     if (profile) {
-      // Update existing profile
       profile.education_level = education_level || profile.education_level;
-      profile.interests = interests || profile.interests;
+      profile.interests = parsedInterests || profile.interests;
       if (profile_image) profile.profile_image = profile_image;
       profile.updated_at = Date.now();
       await profile.save();
     } else {
-      // Create new profile
       profile = await UserProfile.create({
         user_id,
         education_level,
-        interests,
+        interests: parsedInterests,
         profile_image,
       });
     }

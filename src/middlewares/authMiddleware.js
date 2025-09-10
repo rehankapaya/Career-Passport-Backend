@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
+const User = require('../models/User');
 
 const protectAdmin = async (req, res, next) => {
     let token;
@@ -38,7 +39,7 @@ const protectUser = async (req, res, next) => {
     else if (req.cookies && req.cookies.token) {
         token = req.cookies.token;
     }
-    console.log("token", token)
+    console.log("----------------------token", token)
     if (!token) {
         return res.status(401).json({ message: 'Not authorized, no token' });
     }
@@ -46,6 +47,7 @@ const protectUser = async (req, res, next) => {
     try {
         // Verify token and decode user ID
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log("decoded", decoded)
         req.user = await User.findById(decoded.id).select('-password_hash');
         next();
     } catch (error) {
