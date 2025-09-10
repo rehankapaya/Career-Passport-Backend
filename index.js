@@ -9,6 +9,7 @@ const careerRoutes = require('./src/routes/careerRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const resourceRoutes = require('./src/routes/resourceRoutes');
 const userProfileRoutes = require('./src/routes/userProfileRoutes');
+const succesStoriesRoutes = require('./src/routes/successStoriesRoutes');
 
 // Connect to Database
 connectDB();
@@ -29,6 +30,7 @@ app.use('/api/careers', careerRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/user-profiles', userProfileRoutes);
+app.use('/api/success-stories', succesStoriesRoutes);
 
 
 app.get('/', (req, res) => {
