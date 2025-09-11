@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, loginUser, getUserProfile } = require('../controllers/userController');
+const { registerUser, loginUser, getUserProfile, forgotPassword, resetPassword } = require('../controllers/userController');
 const { protect, protectUser } = require('../middlewares/authMiddleware');
 
 
@@ -23,4 +23,8 @@ router.post('/login', loginUser);
 router.get('/profile', protectUser, getUserProfile  );
 // http://localhost:5000/api/users/profile
 
+
+router.post("/forgot-password",forgotPassword);
+
+router.post("/reset-password",resetPassword);
 module.exports = router;
