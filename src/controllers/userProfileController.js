@@ -40,6 +40,35 @@ const upsertUserProfile = async (req, res) => {
   }
 };
 
+
+const resumeUpload = async (req, res) => {
+  try {
+    const resume = req.file ? req.file.path : undefined;
+    const user_id = req.user._id;
+
+    if (!resume) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    // File uploaded successfully
+    let profile = await UserProfile.findOne({ user_id });
+
+    if (profile) {
+      if (resume) profile.resume = resume;
+      profile.updated_at = Date.now();
+      await profile.save();
+    } else {
+      profile = await UserProfile.create({
+        user_id,
+        resume,
+      });
+    }
+    res.json({ message: 'Resume uploaded successfully', file: req.file });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error: error.message });
+  }
+}
+
 // Get user profile
 const getUserProfile = async (req, res) => {
   try {
@@ -54,4 +83,4 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { upsertUserProfile, getUserProfile };
+module.exports = { upsertUserProfile, getUserProfile,resumeUpload };
