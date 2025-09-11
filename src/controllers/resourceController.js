@@ -2,8 +2,8 @@ const Resource = require('../models/Resource');
 
 // Create a new resource (admin only)
 const addResource = async (req, res) => {
-  const { title, category, description, file_url, tag, created_by } = req.body;
-  if (!title || !category || !description || !file_url || !created_by) {
+  const { title, category, description, file_url, tag } = req.body;
+  if (!title || !category || !description || !file_url ) {
     return res.status(400).json({ message: 'All required fields must be provided.' });
   }
   try {
@@ -13,7 +13,7 @@ const addResource = async (req, res) => {
       description,
       file_url,
       tag,
-      created_by,
+      created_by:req.admin._id,
     });
     res.status(201).json(resource);
   } catch (error) {
