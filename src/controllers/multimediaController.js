@@ -37,6 +37,7 @@ const addMultimedia = async (req, res) => {
 const getMultimedia = async (req, res) => {
   try {
     const items = await Multimedia.find();
+    console.log(items)
     res.json(items);
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
@@ -48,6 +49,7 @@ const getMultimediaById = async (req, res) => {
   try {
     const item = await Multimedia.findOne({ media_id: req.params.id });
     if (!item) return res.status(404).json({ message: 'Not found' });
+    console.log("singlemedia=====================================",item)
     res.json(item);
   } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
