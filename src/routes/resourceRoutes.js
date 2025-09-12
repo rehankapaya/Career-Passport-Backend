@@ -7,6 +7,7 @@ const {
   updateResourceTags,
   deleteResource,
   getPopularResources,
+  updateResource,
 } = require('../controllers/resourceController');
 const { protectAdmin, protectUser } = require('../middlewares/authMiddleware');
 const router = express.Router();
@@ -31,5 +32,7 @@ router.delete('/:id', protectAdmin, deleteResource);
 
 // Get popular resources (admin only)
 router.get('/analytics/popular', protectAdmin, getPopularResources);
+
+router.put('/:id', protectAdmin, updateResource);
 
 module.exports = router;

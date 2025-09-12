@@ -100,6 +100,36 @@ const getPopularResources = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+// Update resource details (admin only)
+const updateResource = async (req, res) => {
+  const { title, category, description, file_url, tag } = req.body;
+
+  try {
+    // Find the resource by ID
+    const resource = await Resource.findOne({ resource_id: req.params.id });
+
+    if (!resource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+
+    // Update resource fields (only those that were provided)
+    if (title) resource.title = title;
+    if (category) resource.category = category;
+    if (description) resource.description = description;
+    if (file_url) resource.file_url = file_url;
+    if (tag) resource.tag = tag;
+
+    // Save the updated resource
+    await resource.save();
+
+    return res.status(200).json({
+      message: 'Resource updated successfully',
+      resource,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
 
 module.exports = {
   addResource,
@@ -109,4 +139,5 @@ module.exports = {
   updateResourceTags,
   deleteResource,
   getPopularResources,
+  updateResource
 };
