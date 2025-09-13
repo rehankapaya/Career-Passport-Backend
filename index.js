@@ -18,6 +18,7 @@ const quizRoutes = require("./src/routes/quizRoutes.js");
 const attemptRoutes = require("./src/routes/attemptRoutes.js");
 const recommendRoutes = require("./src/routes/recommendRoutes.js");
 const historyRoutes =  require('./src/routes/historyRoutes')
+const authRoutes =  require('./src/routes/authRoutes.js')
 // Connect to Database
 connectDB();
 
@@ -46,6 +47,7 @@ app.use("/api/quiz", quizRoutes);
 app.use("/api/attempt", attemptRoutes);
 app.use("/api/recommend", recommendRoutes);
 app.use('/api/history', historyRoutes)
+app.use('/api/auth', authRoutes)
 app.get('/', (req, res) => {
     res.send('PathSeeker API is running...');
 });
