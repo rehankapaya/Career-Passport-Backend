@@ -19,6 +19,7 @@ const attemptRoutes = require("./src/routes/attemptRoutes.js");
 const recommendRoutes = require("./src/routes/recommendRoutes.js");
 const historyRoutes =  require('./src/routes/historyRoutes')
 const authRoutes =  require('./src/routes/authRoutes.js')
+const chatbotRoutes = require('./src/routes/chatbotRoutes.js')
 // Connect to Database
 connectDB();
 
@@ -42,7 +43,7 @@ app.use('/api/success-stories', succesStoriesRoutes);
 app.use('/api/multimedia', multimediaRoutes);
 app.use('/api/feedback',feedbackRoutes)
 app.use('/api/bookmarks', bookmarkRoutes)
-
+app.use('/api/chatbot',chatbotRoutes)
 app.use("/api/quiz", quizRoutes);
 app.use("/api/attempt", attemptRoutes);
 app.use("/api/recommend", recommendRoutes);
