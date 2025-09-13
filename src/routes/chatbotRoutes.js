@@ -3,7 +3,7 @@ const axios = require("axios");
 const router = express.Router();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 // http://localhost:5000/api/chatbot/generate?prompt=AI%20careers
-const genAI = new GoogleGenerativeAI('AIzaSyAXZO-Uv95kHdW6SCbpgbU2squuMLCXfZw');
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // System prompt for career guidance instead of expo
