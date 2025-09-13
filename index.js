@@ -14,6 +14,9 @@ const succesStoriesRoutes = require('./src/routes/successStoriesRoutes');
 const multimediaRoutes = require('./src/routes/multimediaRoutes');
 const feedbackRoutes = require('./src/routes/feedbackRoutes')
 const bookmarkRoutes = require('./src/routes/bookmarkRoutes')
+const quizRoutes = require("./src/routes/quizRoutes.js");
+const attemptRoutes = require("./src/routes/attemptRoutes.js");
+const recommendRoutes = require("./src/routes/recommendRoutes.js");
 // Connect to Database
 connectDB();
 
@@ -37,6 +40,9 @@ app.use('/api/success-stories', succesStoriesRoutes);
 app.use('/api/multimedia', multimediaRoutes);
 app.use('/api/feedback',feedbackRoutes)
 app.use('/api/bookmarks', bookmarkRoutes)
+app.use("/api/quiz", quizRoutes);
+app.use("/api/attempt", attemptRoutes);
+app.use("/api/recommend", recommendRoutes);
 
 app.get('/', (req, res) => {
     res.send('PathSeeker API is running...');
