@@ -1,6 +1,5 @@
 const SuccessStory = require('../models/SuccessStories');
 
-// Create a new success story
 const addSuccessStory = async (req, res) => {
     try {
         const { rname, domain, story_text } = req.body;
@@ -21,7 +20,6 @@ const addSuccessStory = async (req, res) => {
     }
 };
 
-// Get all success stories
 const getSuccessStories = async (req, res) => {
     try {
         const stories = await SuccessStory.find({ approved_at: { $ne: null } })
@@ -32,7 +30,6 @@ const getSuccessStories = async (req, res) => {
     }
 };
 
-// Get a single success story by ID
 const getSuccessStoryById = async (req, res) => {
     console.log(req.params.id)
     try {
@@ -57,7 +54,6 @@ const getPendingSuccessStories = async (req, res) => {
     }
 };
 
-// Approve a story (admin only)
 const approveSuccessStory = async (req, res) => {
     try {
         const story = await SuccessStory.findOne({ story_id: req.params.id });
@@ -73,7 +69,6 @@ const approveSuccessStory = async (req, res) => {
     }
 };
 
-// Delete a story (admin only)
 const deleteSuccessStory = async (req, res) => {
     try {
         const story = await SuccessStory.findOneAndDelete({ story_id: req.params.id });

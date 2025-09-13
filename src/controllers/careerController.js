@@ -1,8 +1,6 @@
 const Career = require('../models/Careers');
 
-// @desc    Add a new career profile
-// @route   POST /api/careers
-// @access  Protected (admin)
+
 const addCareer = async (req, res) => {
   const { title, description, domain, required_skills, education_path, expected_salary } = req.body;
 
@@ -27,9 +25,6 @@ const addCareer = async (req, res) => {
   }
 };
 
-// @desc    Get all careers
-// @route   GET /api/careers
-// @access  Public
 const getCareers = async (req, res) => {
   try {
     const careers = await Career.find();
@@ -39,9 +34,6 @@ const getCareers = async (req, res) => {
   }
 };
 
-// @desc    Get a career by ID
-// @route   GET /api/careers/:id
-// @access  Public
 const getCareerById = async (req, res) => {
   try {
     const career = await Career.findOne({ career_id: req.params.id });
@@ -61,7 +53,6 @@ const updateCareer = async (req, res) => {
       return res.status(404).json({ message: 'Career not found' });
     }
 
-    // Update fields
     career.title = req.body.title || career.title;
     career.description = req.body.description || career.description;
     career.domain = req.body.domain || career.domain;

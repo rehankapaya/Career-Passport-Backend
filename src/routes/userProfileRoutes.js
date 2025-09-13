@@ -4,10 +4,8 @@ const { upsertUserProfile, getUserProfile, resumeUpload } = require('../controll
 const { protectUser } = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/upload');
 
-// Create or update profile (with image upload)
 router.post('/', protectUser, upload.single('profile_image'), upsertUserProfile);
 
-// Get profile
 router.get('/', protectUser, getUserProfile);
 
 router.post("/resume",protectUser,upload.single('resume'),resumeUpload)

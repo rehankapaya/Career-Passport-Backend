@@ -3,7 +3,6 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Store profile images and success story images in different folders
     if (file.fieldname === "profile_image") {
       cb(null, "uploads/profile_images/");
     } else if (file.fieldname === "image_url") {
@@ -17,7 +16,7 @@ const storage = multer.diskStorage({
     }
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // unique filename
+    cb(null, Date.now() + path.extname(file.originalname)); 
   }
 });
 

@@ -1,4 +1,3 @@
-// CommonJS version
 const { trends } = require("google-trends-api-client");
 
 async function trendScoreForKeywords(keywords = [], { geo = "" } = {}) {
@@ -7,17 +6,13 @@ async function trendScoreForKeywords(keywords = [], { geo = "" } = {}) {
     const startTime = new Date();
     startTime.setFullYear(endTime.getFullYear() - 1);
 
-    // NOTE: method name is getInterestOverTime (not interestOverTime)
     const series = await trends.getInterestOverTime({
-      keywords,            // array of strings
+      keywords,            
       startTime,
       endTime,
-      geo,                 // e.g. "PK" for Pakistan or "" global
-      // resolution: "WEEK" // optional
+      geo,               
     });
 
-    // series is an array of points per keyword; normalize/average per role
-    // shape from the client is already parsed JSON. We’ll compute per keyword.
     const averages = {};
     for (const kw of keywords) {
       const points = series
@@ -28,7 +23,6 @@ async function trendScoreForKeywords(keywords = [], { geo = "" } = {}) {
     }
     return averages;
   } catch (e) {
-    // graceful fallback
     return Object.fromEntries(keywords.map(k => [k, 50]));
   }
 }

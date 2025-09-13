@@ -28,7 +28,6 @@ const userSchema = mongoose.Schema({
   timestamps: true,
 });
 
-// Set user_id to _id before saving if not set
 userSchema.pre('save', async function (next) {
   if (!this.user_id) {
     this.user_id = this._id.toString();

@@ -8,7 +8,7 @@ const userProfileSchema = mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User', // References the User model
+        ref: 'User', 
     },
     education_level: {
         type: String,
@@ -32,7 +32,6 @@ const userProfileSchema = mongoose.Schema({
     },
 });
 
-// Set resource_id to _id before saving if not set
 userProfileSchema.pre('save', function (next) {
     if (!this.profile_id) {
         this.profile_id = this._id.toString();

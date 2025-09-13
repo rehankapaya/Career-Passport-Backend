@@ -36,7 +36,6 @@ const successStorySchema = mongoose.Schema({
   timestamps: true,
 });
 
-// Set story_id to _id before saving if not set
 successStorySchema.pre('save', function(next) {
   if (!this.story_id) {
     this.story_id = this._id.toString();

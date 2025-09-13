@@ -11,7 +11,7 @@ const multimediaSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    required: true, // e.g. 'video', 'audio', 'image', 'pdf'
+    required: true,
   },
   url: {
     type: String,
@@ -36,7 +36,6 @@ const multimediaSchema = mongoose.Schema({
   timestamps: true,
 });
 
-// Set media_id to _id before saving if not set
 multimediaSchema.pre('save', function(next) {
   if (!this.media_id) {
     this.media_id = this._id.toString();

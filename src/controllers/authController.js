@@ -1,4 +1,3 @@
-// controllers/auth.controller.js
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
@@ -21,7 +20,6 @@ exports.loginAny = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // 1) Find account (prefer Admin first; flip if you prefer Users)
     let account = await Admin.findOne({ email });
     let role = 'admin';
 
@@ -49,8 +47,8 @@ exports.loginAny = async (req, res) => {
       id: account._id,
       name: account.name || account.uname || account.fullName || null,
       email: account.email,
-      role,     // 'admin' or 'user'
-      token,    // also returned for non-cookie clients
+      role,   
+      token,  
     });
 
   } catch (err) {

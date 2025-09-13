@@ -2,24 +2,20 @@ const Admin = require('../models/Admin');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// @desc    Authenticate admin & get token
-// @route   POST /api/admin/login
-// @access  Public
+
 const authAdmin = async (req, res) => {
   const { email, password } = req.body;
 
-  // Check if admin exists
+ 
   const admin = await Admin.findOne({ email });
 
   if (admin && (await bcrypt.compare(password, admin.password_hash))) {
-    // Generate a token for authentication
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
       expiresIn: '10d',
     });
 
     res.cookie('token', token, {
       httpOnly: true,
-      // maxAge: 60 * 60 * 1000 // 1 hour
     });
 
     res.json({
@@ -56,9 +52,7 @@ const addCareerProfile = async (req, res) => {
   }
 };
 const createAdmin = async (req, res) => {
-  // A simple way to protect this endpoint for initial setup
-  // In a production app, you'd use a more sophisticated method.
-  // We can add a check for an initial setup key or a header.
+
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -74,7 +68,7 @@ const createAdmin = async (req, res) => {
     const newAdmin = await Admin.create({
       name,
       email,
-      password_hash: password, // The pre-save hook will hash this password
+      password_hash: password, 
     });
 
     if (newAdmin) {

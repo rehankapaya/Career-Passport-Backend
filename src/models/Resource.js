@@ -22,7 +22,7 @@ const resourceSchema = mongoose.Schema({
     required: true,
   },
   tag: {
-    type: [String], // Array of tags
+    type: [String], 
     default: [],
   },
   views_count: {
@@ -38,7 +38,6 @@ const resourceSchema = mongoose.Schema({
   timestamps: true,
 });
 
-// Set resource_id to _id before saving if not set
 resourceSchema.pre('save', function(next) {
   if (!this.resource_id) {
     this.resource_id = this._id.toString();

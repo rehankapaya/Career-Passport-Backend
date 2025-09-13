@@ -17,7 +17,7 @@ const careerSchema = mongoose.Schema({
     required: true,
   },
   required_skills: {
-    type: [String], // Array of skills
+    type: [String], 
     required: true,
   },
   education_path: {
@@ -32,7 +32,6 @@ const careerSchema = mongoose.Schema({
   timestamps: true,
 });
 
-// Set career_id to _id before saving if not set
 careerSchema.pre('save', function(next) {
   if (!this.career_id) {
     this.career_id = this._id.toString();

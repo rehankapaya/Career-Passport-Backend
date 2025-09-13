@@ -1,6 +1,5 @@
 const Resource = require('../models/Resource');
 
-// Create a new resource (admin only)
 const addResource = async (req, res) => {
   const { title, category, description, file_url, tag } = req.body;
   if (!title || !category || !description || !file_url ) {
@@ -21,7 +20,6 @@ const addResource = async (req, res) => {
   }
 };
 
-// Get all resources (grouped by category or tag)
 const getResources = async (req, res) => {
   try {
     const { category, tag } = req.query;
@@ -35,7 +33,6 @@ const getResources = async (req, res) => {
   }
 };
 
-// Get a single resource (for preview, modal, etc.)
 const getResourceById = async (req, res) => {
   try {
     const resource = await Resource.findOne({ resource_id: req.params.id }).populate('created_by', 'uname email');
@@ -48,7 +45,6 @@ const getResourceById = async (req, res) => {
   }
 };
 
-// Download resource (increments views_count)
 const downloadResource = async (req, res) => {
   try {
     const resource = await Resource.findOne({ resource_id: req.params.id });
@@ -63,7 +59,6 @@ const downloadResource = async (req, res) => {
   }
 };
 
-// Update resource tags (admin only)
 const updateResourceTags = async (req, res) => {
   try {
     const resource = await Resource.findOne({ resource_id: req.params.id });
@@ -78,7 +73,6 @@ const updateResourceTags = async (req, res) => {
   }
 };
 
-// Delete resource (admin only)
 const deleteResource = async (req, res) => {
   try {
     const resource = await Resource.findOneAndDelete({ resource_id: req.params.id });
@@ -91,7 +85,6 @@ const deleteResource = async (req, res) => {
   }
 };
 
-// Admin analytics: get most popular resources
 const getPopularResources = async (req, res) => {
   try {
     const resources = await Resource.find().sort({ views_count: -1 }).limit(10);
@@ -100,26 +93,22 @@ const getPopularResources = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-// Update resource details (admin only)
 const updateResource = async (req, res) => {
   const { title, category, description, file_url, tag } = req.body;
 
   try {
-    // Find the resource by ID
     const resource = await Resource.findOne({ resource_id: req.params.id });
 
     if (!resource) {
       return res.status(404).json({ message: 'Resource not found' });
     }
 
-    // Update resource fields (only those that were provided)
     if (title) resource.title = title;
     if (category) resource.category = category;
     if (description) resource.description = description;
     if (file_url) resource.file_url = file_url;
     if (tag) resource.tag = tag;
 
-    // Save the updated resource
     await resource.save();
 
     return res.status(200).json({

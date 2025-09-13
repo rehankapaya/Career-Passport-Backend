@@ -1,6 +1,5 @@
 const Bookmark = require('../models/Bookmark');
 
-// Create or toggle bookmark (idempotent)
 exports.createOrRemove = async (req, res) => {
   try {
     const { itemType, itemId } = req.body;
@@ -25,7 +24,6 @@ exports.createOrRemove = async (req, res) => {
   }
 };
 
-// List bookmarks for logged in user, optional filter by type
 exports.list = async (req, res) => {
   try {
     const { type } = req.query;
@@ -40,7 +38,6 @@ exports.list = async (req, res) => {
   }
 };
 
-// Check if specific item is bookmarked
 exports.isBookmarked = async (req, res) => {
   try {
     const { itemType, itemId } = req.query;
@@ -54,7 +51,6 @@ exports.isBookmarked = async (req, res) => {
   }
 };
 
-// Remove a bookmark by id
 exports.removeById = async (req, res) => {
   try {
     const { id } = req.params;

@@ -1,7 +1,7 @@
 const History = require('../models/History')
 
 
-// Save History
+
  const saveHistory = async (req, res) => {
   console.log(req.body)
   try {
@@ -14,7 +14,6 @@ const History = require('../models/History')
   }
 };
 
-// Get User History
  const getUserHistory = async (req, res) => {
   try {
     const history = await History.find({ userId: req.params.userId }).sort({ viewedAt: -1 });

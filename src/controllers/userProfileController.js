@@ -1,13 +1,11 @@
 const UserProfile = require('../models/UserProfile');
 
-// Create or update user profile
 const upsertUserProfile = async (req, res) => {
   try {
     const { education_level, interests } = req.body;
     const profile_image = req.file ? req.file.path : undefined;
     const user_id = req.user._id;
 
-    // Parse interests if it's a stringified array
     let parsedInterests = interests;
     if (typeof interests === 'string') {
       try {
@@ -50,7 +48,6 @@ const resumeUpload = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // File uploaded successfully
     let profile = await UserProfile.findOne({ user_id });
 
     if (profile) {
@@ -69,7 +66,6 @@ const resumeUpload = async (req, res) => {
   }
 }
 
-// Get user profile
 const getUserProfile = async (req, res) => {
   try {
     const user_id = req.user._id;

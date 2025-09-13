@@ -1,8 +1,6 @@
 const Feedback = require('../models/Feedback');
 
-// @desc    Create new feedback
-// @route   POST /api/feedbacks
-// @access  Private (requires logged-in user)
+
 const createFeedback = async (req, res) => {
     const { category, message } = req.body;
 
@@ -16,7 +14,7 @@ const createFeedback = async (req, res) => {
         }
 
         const feedback = await Feedback.create({
-            user_id: req.user._id, // attach from logged-in user
+            user_id: req.user._id,
             category,
             message,
         });
@@ -35,9 +33,7 @@ const createFeedback = async (req, res) => {
     }
 };
 
-// @desc    Get all feedbacks
-// @route   GET /api/feedbacks
-// @access  Admin
+
 const getAllFeedbacks = async (req, res) => {
     try {
         const feedbacks = await Feedback.find().populate('user_id', 'uname email');
@@ -47,9 +43,7 @@ const getAllFeedbacks = async (req, res) => {
     }
 };
 
-// @desc    Get single feedback by ID
-// @route   GET /api/feedbacks/:id
-// @access  Private (owner or admin)
+
 const getFeedbackById = async (req, res) => {
     try {
         const feedback = await Feedback.findById(req.params.id).populate('user_id', 'uname email');
@@ -64,9 +58,7 @@ const getFeedbackById = async (req, res) => {
     }
 };
 
-// @desc    Update feedback status
-// @route   PUT /api/feedbacks/:id/status
-// @access  Admin
+
 const updateFeedbackStatus = async (req, res) => {
     const { status } = req.body;
 
@@ -91,9 +83,7 @@ const updateFeedbackStatus = async (req, res) => {
     }
 };
 
-// @desc    Delete feedback
-// @route   DELETE /api/feedbacks/:id
-// @access  Admin
+
 const deleteFeedback = async (req, res) => {
     try {
         const feedback = await Feedback.findByIdAndDelete(req.params.id);

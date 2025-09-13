@@ -20,7 +20,6 @@ const protectAdmin = async (req, res, next) => {
     console.log("----------------------token", token)
 
     try {
-        // Verify token and decode admin ID
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.admin = await Admin.findById(decoded.id).select('-password_hash');
         next();
@@ -32,11 +31,9 @@ const protectAdmin = async (req, res, next) => {
 const protectUser = async (req, res, next) => {
     let token;
 
-    // Check Authorization header
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
     }
-    // Check cookies
     else if (req.cookies && req.cookies.token) {
         token = req.cookies.token;
     }
@@ -46,7 +43,6 @@ const protectUser = async (req, res, next) => {
     }
 
     try {
-        // Verify token and decode user ID
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log("decoded", decoded)
         req.user = await User.findById(decoded.id).select('-password_hash');

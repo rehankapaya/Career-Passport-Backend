@@ -7,13 +7,13 @@ const feedbackSchema = mongoose.Schema({
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to User collection
+    ref: 'User', 
     required: true,
   },
   category: {
     type: String,
     required: true,
-    enum: ['bug', 'feature', 'general', 'other'], // you can adjust categories as needed
+    enum: ['bug', 'feature', 'general', 'other'], 
   },
   message: {
     type: String,
@@ -32,7 +32,6 @@ const feedbackSchema = mongoose.Schema({
   timestamps: true,
 });
 
-// Set feedback_id to _id before saving if not set
 feedbackSchema.pre('save', function (next) {
   if (!this.feedback_id) {
     this.feedback_id = this._id.toString();

@@ -2,10 +2,10 @@ const Attempt = require("../models/Attempt");
 const Quiz = require("../models/Quiz");
 
 const scoreResponse = (q, value) => {
-  // Simple demo scoring you can improve later
-  if (q.type === "mcq") return 1;                 // equal weight
-  if (q.type === "slider") return Number(value);  // 0..10 scale
-  if (q.type === "likert") return Number(value);  // 1..5
+
+  if (q.type === "mcq") return 1;                 
+  if (q.type === "slider") return Number(value);  
+  if (q.type === "likert") return Number(value);  
   return 0;
 };
 
@@ -17,15 +17,13 @@ const scoreResponse = (q, value) => {
 
  const saveStep = async (req, res) => {
   const { attemptId } = req.params;
-  const { responses, stepIndex } = req.body; // [{questionId,value,timeTakenSec},...]
+  const { responses, stepIndex } = req.body; 
 
   const attempt = await Attempt.findById(attemptId).populate("quizId");
   if (!attempt) return res.status(404).json({ error: "Attempt not found" });
 
-  // merge responses
   attempt.responses.push(...responses);
 
-  // compute category scores from this step
   const quiz = await Quiz.findById(attempt.quizId);
   const stepQuestions = quiz.steps[stepIndex];
   for (const r of responses) {
@@ -46,7 +44,6 @@ const scoreResponse = (q, value) => {
   const { attemptId } = req.params;
   const attempt = await Attempt.findById(attemptId);
   attempt.status = "completed";
-  // sum map values
   let total = 0;
   for (const v of attempt.categoryScores?.values() || []) total += v;
   attempt.totalScore = total;
