@@ -27,6 +27,7 @@ exports.loginAny = async (req, res) => {
 
     if (!account) {
       account = await User.findOne({ email });
+      console.log(account)
       role = 'user';
     }
 
