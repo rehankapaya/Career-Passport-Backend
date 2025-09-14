@@ -27,7 +27,7 @@ const app = express();
 
 // Middleware
 app.use(cors(
-    {origin: [process.env.CLIENT_URL,'https://nextstep-navigator-sfcmernmavericks.netlify.app/','https://nextstep-navigator-sfcmernmavericks.netlify.app','http://localhost:5173','http://localhost:5174'], credentials: true}
+    {origin: [process.env.CLIENT_URL,'https://careerpassport-9eu2it8n4-muhammad-rehans-projects-7a33566b.vercel.app/','https://careerpassport-9eu2it8n4-muhammad-rehans-projects-7a33566b.vercel.app','http://localhost:5173','http://localhost:5174'], credentials: true}
 )); 
 app.use(express.json());
 app.use(cookieParser());
