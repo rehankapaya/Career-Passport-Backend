@@ -26,26 +26,9 @@ connectDB();
 const app = express();
 
 // Middleware
-const allowed = [
-  'https://nextstep-navigator-sfcmernmavericks.netlify.app',
-  'http://localhost:5173',
-  'http://localhost:5174'
-];
-
-app.use((req, res, next) => {
-  // If you need to allow undefined origin for tools like curl/Postman, you can handle that here.
-  const origin = req.headers.origin;
-  if (allowed.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Vary', 'Origin');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  }
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
-  next();
-});
-
+app.use(cors(
+    {origin: [process.env.CLIENT_URL,'https://nextstep-navigator-sfcmernmavericks.netlify.app/','https://nextstep-navigator-sfcmernmavericks.netlify.app','http://localhost:5173','http://localhost:5174'], credentials: true}
+)); 
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));

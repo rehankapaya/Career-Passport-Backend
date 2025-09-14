@@ -3,6 +3,8 @@ const router = express.Router();
 const { protectUser } = require('../middlewares/authMiddleware');
 const controller = require('../controllers/bookmarkController');
 
+
+router.get("/admin/all", controller.getAllBookmarks);
 router.use(protectUser);
 
 router.post('/', controller.createOrRemove);

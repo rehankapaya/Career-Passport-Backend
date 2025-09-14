@@ -1,12 +1,27 @@
 const Bookmark = require('../models/Bookmark');
 
+
+exports.getAllBookmarks = async (req, res) => {
+  try {
+    const bookmarks = await Bookmark.find()
+      .populate("user", "firstName email") 
+      .sort({ createdAt: -1 });
+
+    res.json(bookmarks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 exports.createOrRemove = async (req, res) => {
+  console.log(req.body)
   try {
     const { itemType, itemId } = req.body;
     if (!itemType || !itemId) return res.status(400).json({ message: 'itemType and itemId are required' });
-
     const query = { user: req.user._id, itemType, itemId };
     const existing = await Bookmark.findOne(query);
+    console.log(existing)
 
     if (existing) {
       await Bookmark.deleteOne({ _id: existing._id });
