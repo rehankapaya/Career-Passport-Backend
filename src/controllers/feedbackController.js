@@ -3,9 +3,10 @@ const Feedback = require('../models/Feedback');
 
 const createFeedback = async (req, res) => {
     const { category, message } = req.body;
+    const { userId } = req.params;
 
     try {
-        if (!req.user) {
+        if (!userId) {
             return res.status(401).json({ message: 'Not authorized, no user found' });
         }
 
@@ -14,7 +15,7 @@ const createFeedback = async (req, res) => {
         }
 
         const feedback = await Feedback.create({
-            user_id: req.user._id,
+            user_id: userId,   // ✅ only use this
             category,
             message,
         });
@@ -32,6 +33,7 @@ const createFeedback = async (req, res) => {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
+
 
 
 const getAllFeedbacks = async (req, res) => {
