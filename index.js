@@ -17,18 +17,33 @@ const bookmarkRoutes = require('./src/routes/bookmarkRoutes')
 const quizRoutes = require("./src/routes/quizRoutes.js");
 const attemptRoutes = require("./src/routes/attemptRoutes.js");
 const recommendRoutes = require("./src/routes/recommendRoutes.js");
-const historyRoutes =  require('./src/routes/historyRoutes')
-const authRoutes =  require('./src/routes/authRoutes.js')
+const historyRoutes = require('./src/routes/historyRoutes')
+const authRoutes = require('./src/routes/authRoutes.js')
 const chatbotRoutes = require('./src/routes/chatbotRoutes.js')
 // Connect to Database
 connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors(
-    {origin: [process.env.CLIENT_URL,'https://careerpassport-9eu2it8n4-muhammad-rehans-projects-7a33566b.vercel.app/','https://careerpassport-9eu2it8n4-muhammad-rehans-projects-7a33566b.vercel.app','http://localhost:5173','http://localhost:5174'], credentials: true}
-)); 
+const allowedOrigins = [
+    process.env.CLIENT_URL,
+    'https://careerpassport.vercel.app',
+    'https://www.careerpassport.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:5174'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
@@ -40,9 +55,9 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/user-profiles', userProfileRoutes);
 app.use('/api/success-stories', succesStoriesRoutes);
 app.use('/api/multimedia', multimediaRoutes);
-app.use('/api/feedback',feedbackRoutes)
+app.use('/api/feedback', feedbackRoutes)
 app.use('/api/bookmarks', bookmarkRoutes)
-app.use('/api/chatbot',chatbotRoutes)
+app.use('/api/chatbot', chatbotRoutes)
 app.use("/api/quiz", quizRoutes);
 app.use("/api/attempt", attemptRoutes);
 app.use("/api/recommend", recommendRoutes);
