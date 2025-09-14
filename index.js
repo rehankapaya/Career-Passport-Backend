@@ -64,7 +64,7 @@ app.use("/api/recommend", recommendRoutes);
 app.use('/api/history', historyRoutes)
 app.use('/api/auth', authRoutes)
 app.get('/', (req, res) => {
-    res.send('PathSeeker API Done :)');
+    res.send('PathSeeker API Done chl ja multer :)');
 });
 
 const PORT = process.env.PORT || 3000;
