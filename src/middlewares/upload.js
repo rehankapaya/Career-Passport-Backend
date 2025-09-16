@@ -1,25 +1,11 @@
-const multer = require("multer");
-const path = require("path");
+// middlewares/upload.js
+const multer = require('multer');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (file.fieldname === "profile_image") {
-      cb(null, "uploads/profile_images/");
-    } else if (file.fieldname === "image_url") {
-      cb(null, "uploads/success_story_images/");
-    } else if (file.fieldname === "file") {
-      cb(null, "uploads/multimedia/");
-    } else if (file.fieldname === "resume") {
-      cb(null, "uploads/resume/");
-    } else {
-      cb(null, "uploads/other/");
-    }
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); 
-  }
+const storage = multer.memoryStorage(); // <— no files on disk
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB cap (tune as needed)
 });
-
-const upload = multer({ storage });
 
 module.exports = upload;

@@ -20,6 +20,7 @@ const successStorySchema = mongoose.Schema({
   image_url: {
     type: String,
   },
+  image_public_id: { type: String },
   submitted_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

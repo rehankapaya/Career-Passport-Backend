@@ -6,29 +6,30 @@ const transporter = require('../config/nodemailerTransporter');
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '30d', 
+        expiresIn: '30d',
     });
 };
 // Get all users (Admin only)
 const getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find().select("-password_hash"); // exclude password
-    res.json(users);
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ message: "Server Error", error: error.message });
-  }
+    try {
+        const users = await User.find().select("-password_hash"); // exclude password
+        res.json(users);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
 };
 
 const registerUser = async (req, res) => {
     const { uname, email, password, role } = req.body;
 
+    console.log(req.body)
     try {
         const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).json({ message: 'User already exists' });
         }
-
+        console.log(userExists)
         const user = await User.create({ uname, email, password_hash: password, role });
 
         if (user) {
@@ -46,14 +47,14 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
-
+    console.log(req.body)
     try {
         const user = await User.findOne({ email });
 
         if (user && (await bcrypt.compare(password, user.password_hash))) {
             const token = generateToken(user._id);
             res.cookie('token', token, {
-                maxAge: 30 * 24 * 60 * 60 * 1000 
+                maxAge: 30 * 24 * 60 * 60 * 1000
             });
             console.log("user", user)
             res.json({
@@ -87,7 +88,7 @@ const forgotPassword = async (req, res) => {
         }
 
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-        const expiresAt = new Date(Date.now() + 15 * 60 * 1000); 
+        const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
         const newOTP = new OTP({
             email,
@@ -119,7 +120,7 @@ const forgotPassword = async (req, res) => {
 
         res.json({
             message: "OTP sent successfully to your email address.",
-            email: email 
+            email: email
         });
 
     } catch (err) {
@@ -162,4 +163,4 @@ const resetPassword = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser,getAllUsers,  getUserProfile, forgotPassword, resetPassword };
+module.exports = { registerUser, loginUser, getAllUsers, getUserProfile, forgotPassword, resetPassword };

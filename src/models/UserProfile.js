@@ -8,7 +8,7 @@ const userProfileSchema = mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User', 
+        ref: 'User',
     },
     education_level: {
         type: String,
@@ -22,6 +22,10 @@ const userProfileSchema = mongoose.Schema({
     resume: {
         type: String,
     },
+    resume_id: { type: String },
+    resume_name: String,   // e.g., "MyCV"
+    resume_ext: String,    // e.g., "pdf"
+    resume_mime: String,   // e.g., "application/pdf"
     created_at: {
         type: Date,
         default: Date.now,
