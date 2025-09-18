@@ -8,11 +8,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'uploads',
-  },
-});
 
-module.exports = {storage,cloudinary};
+
+module.exports = cloudinary;
