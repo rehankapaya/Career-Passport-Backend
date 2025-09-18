@@ -1,7 +1,7 @@
 // middlewares/upload.js
 const multer = require('multer');
 
-const storage = multer.memoryStorage(); // <— no files on disk
+const {storage} = require('../utils/cloudinary')
 
 const upload = multer({
   storage,
