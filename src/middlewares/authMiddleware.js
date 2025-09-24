@@ -46,6 +46,7 @@ const protectUser = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log("decoded", decoded)
         req.user = await User.findById(decoded.id).select('-password_hash');
+        console.log(req.user)
         next();
     } catch (error) {
         res.status(401).json({ message: 'Not authorized, token failed' });

@@ -24,14 +24,23 @@ const chatbotRoutes = require('./src/routes/chatbotRoutes.js')
 connectDB();
 
 const app = express();
-
 const allowedOrigins = [
-    'https://careerpassport.vercel.app',
-    'http://localhost:5173',
-    'http://localhost:5174'
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://careerpassport.vercel.app',
 ];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);  // allow the specific origin
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // allow cookies/authorization headers
+};
 
-app.use(cors(allowedOrigins));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
