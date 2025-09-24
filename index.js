@@ -26,23 +26,12 @@ connectDB();
 const app = express();
 
 const allowedOrigins = [
-    process.env.CLIENT_URL,
     'https://careerpassport.vercel.app',
-    'https://www.careerpassport.vercel.app',
     'http://localhost:5173',
     'http://localhost:5174'
 ];
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true
-}));
+app.use(cors(allowedOrigins));
 
 app.use(express.json());
 app.use(cookieParser());
